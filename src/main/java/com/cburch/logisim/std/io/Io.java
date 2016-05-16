@@ -39,7 +39,9 @@ public class Io extends Library {
 
     private static FactoryDescription[] DESCRIPTIONS = {
         new FactoryDescription("Button", getFromLocale("buttonComponent"),
-                "button.svg", "Button"),
+                "button.svg", "HoldButton"),
+        new FactoryDescription("Toggle Button", getFromLocale("toggleButtonComponent"),
+                "button.svg", "ToggleButton"),
         new FactoryDescription("Joystick", getFromLocale("joystickComponent"),
                 "joystick.svg", "Joystick"),
         new FactoryDescription("Keyboard", getFromLocale("keyboardComponent"),

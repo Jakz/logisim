@@ -26,11 +26,11 @@ import com.cburch.logisim.instance.StdAttr;
 import com.cburch.logisim.util.GraphicsUtil;
 import static com.cburch.logisim.util.LocaleString.*;
 
-public class Button extends InstanceFactory {
+public abstract class Button extends InstanceFactory {
     private static final int DEPTH = 3;
 
-    public Button() {
-        super("Button", getFromLocale("buttonComponent"));
+    public Button(String name, String displayName) {
+        super(name, getFromLocale(displayName));
         setAttributes(new Attribute[] {
                 StdAttr.FACING, Io.ATTR_COLOR,
                 StdAttr.LABEL, Io.ATTR_LABEL_LOC,
@@ -43,7 +43,6 @@ public class Button extends InstanceFactory {
         setFacingAttribute(StdAttr.FACING);
         setIconName("button.svg");
         setPorts(new Port[] { new Port(0, 0, Port.OUTPUT, 1) });
-        setInstancePoker(Poker.class);
         setInstanceLogger(Logger.class);
     }
 
@@ -191,28 +190,6 @@ public class Button extends InstanceFactory {
         painter.drawLabel();
         g.translate(-depress, -depress);
         painter.drawPorts();
-    }
-
-    public static class Poker extends InstancePoker {
-        @Override
-        public void mousePressed(InstanceState state, MouseEvent e) {
-            setValue(state, Value.TRUE);
-        }
-
-        @Override
-        public void mouseReleased(InstanceState state, MouseEvent e) {
-            setValue(state, Value.FALSE);
-        }
-
-        private void setValue(InstanceState state, Value val) {
-            InstanceDataSingleton data = (InstanceDataSingleton) state.getData();
-            if (data == null) {
-                state.setData(new InstanceDataSingleton(val));
-            } else {
-                data.setValue(val);
-            }
-            state.getInstance().fireInvalidated();
-        }
     }
 
     public static class Logger extends InstanceLogger {
